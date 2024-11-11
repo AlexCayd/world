@@ -151,6 +151,21 @@ a {
 
 
 /* QUERIES */
+
+.queries__texto {
+    text-align: center;
+}
+
+.queries__titulo {
+    font-size: 32px;
+    margin-top: 40px;
+    text-align: center;
+    color: var(--blanco);
+    padding: 15px;
+    background-color: var(--azul);
+    display: inline-block;
+}
+
 .queries {
     display: flex;
     flex-wrap: wrap;
