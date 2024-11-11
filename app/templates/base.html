@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <a href="{{ url_for('index') }}" class="header__enlace">
+            <h2 class="header__titulo">Mundo</h2>
+        </a>
+
+        <nav class="navegacion">
+            <a href="#" class="navegacion__enlace">Query 1</a>
+            <a href="#" class="navegacion__enlace">Query 2</a>
+            <a href="#" class="navegacion__enlace">Query 3</a>
+            <a href="#" class="navegacion__enlace">Query 4</a>
+            <a href="#" class="navegacion__enlace">Query 5</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero__negro"></div>
+        <div class="hero__texto contenedor">
+            <h2 class="hero__titulo">Exploremos el Mundo de Forma Interactiva</h2>
+            <p class="hero__descripcion">Descubre información clave sobre países, ciudades y lenguajes de manera rápida y sencilla, todo en un solo lugar</p>
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="footer">
+        <div class="footer__contenedor">
+            <p class="footer__texto">Proyecto Final</p>
+            <p class="footer__texto">Ingeniería de Software</p>
+            <p class="footer__texto">Instructor: Bárbaro Jorge Ferro Castro</p>
+        </div>
+        <div class="footer__contenedor">
+            <p class="footer__texto">Emilio Arriaga</p>
+            <p class="footer__texto">Alexander Oliva</p>
+            <p class="footer__texto">Isaiah Rivas</p>
+        </div>
+        <div class="footer__contenedor">
+            <p class="footer__texto">Facultad de Ingeniería</p>
+            <p class="footer__texto">Agosto - Diciembre 2024</p>
+            <p class="footer__texto">Universidad Anáhuac México Campus Norte</p>
+        </div>
+    </footer>
+</body>
+</html>
