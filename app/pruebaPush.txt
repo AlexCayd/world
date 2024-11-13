@@ -1,0 +1,2 @@
+Este es un push proveniente de Isaiah, para verificar la
+configuración del repositorio.
