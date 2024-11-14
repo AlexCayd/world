@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+
+{% block content%}
+    <div class="contenedor">
+        <h2 class="queries__titulo">Prueba de Titulo</h2>
+        <table>
+            <tr>
+                <p class="queries__texto"><th>País</th><th>GNP</th><th>Forma de Gobierno</th></p>
+            </tr>
+            {% for resultado in consulta_1 %}
+            <p class="queries__texto">
+                <tr>
+                    <td>{{ resultado.name }}</td>
+                    <td>{{ resultado.gnp }}</td>
+                    <td>{{ resultado.government_form }}</td>
+                </tr>
+            </p>
+            {% endfor %}
+        </table>
+    </div> 
+
+{% endblock %}
