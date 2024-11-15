@@ -6,7 +6,33 @@
         <div class="bloque">
             <h2 class="bloque__titulo">Query 1: Identificar los 10 países con el Producto Interno Bruto (GNP) más bajo y analizar cómo se relaciona esta condición económica con su forma de gobierno registrada en la base de datos.</h2>
         </div>
+
+        <div class="contenedor">
             <div class="bloque">
+            <h2 class="tabla__titulo">Tabla de los Resultados</h2>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>País</th>
+                        <th>GNP</th>
+                        <th>Forma de Gobierno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resultado in consulta_1 %}
+                    <tr>
+                        <td>{{ resultado.name }}</td>
+                        <td>{{ resultado.gnp }}</td>
+                        <td>{{ resultado.government_form }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+            <div class="bloque">
+                <h2 class="tabla__titulo">Análisis</h2>
                 <div class="bloque__contenido">
                     <p class="bloque__descripcion">
                         La relación entre el Producto Interno Bruto (GNP) 
@@ -40,29 +66,6 @@
 
     
     <!-- -->
-            <div class="contenedor">
-                <div class="bloque">
-                <h2 class="tabla__titulo">Tabla de los Resultados</h2>
-                <table class="tabla">
-                    <thead>
-                        <tr>
-                            <th>País</th>
-                            <th>GNP</th>
-                            <th>Forma de Gobierno</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for resultado in consulta_1 %}
-                        <tr>
-                            <td>{{ resultado.name }}</td>
-                            <td>{{ resultado.gnp }}</td>
-                            <td>{{ resultado.government_form }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                </div>
-                
-            </div> 
+     
 
 {% endblock %}
