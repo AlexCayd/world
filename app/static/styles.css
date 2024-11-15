@@ -240,10 +240,9 @@ a {
 }
 
 .bloque__contenido {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
 }
 
 .bloque__descripcion {
