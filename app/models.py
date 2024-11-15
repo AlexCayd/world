@@ -7,7 +7,7 @@ import pymysql
 from sqlalchemy.orm import sessionmaker
 import config
 
-engine = create_engine("mysql+pymysql://root@localhost/world")
+engine = create_engine(config.DATABASE_URL)
 Base = declarative_base()
 SessionLocal = sessionmaker(bind=engine)
 session = SessionLocal()

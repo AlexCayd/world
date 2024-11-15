@@ -1,22 +1,68 @@
 {% extends 'base.html'%}
 
 {% block content%}
+    <!-- Bloque de contenido de Título y De Descripción -->
     <div class="contenedor">
-        <h2 class="queries__titulo">Prueba de Titulo</h2>
-        <table>
-            <tr>
-                <p class="queries__texto"><th>País</th><th>GNP</th><th>Forma de Gobierno</th></p>
-            </tr>
-            {% for resultado in consulta_1 %}
-            <p class="queries__texto">
-                <tr>
-                    <td>{{ resultado.name }}</td>
-                    <td>{{ resultado.gnp }}</td>
-                    <td>{{ resultado.government_form }}</td>
-                </tr>
-            </p>
-            {% endfor %}
-        </table>
-    </div> 
+        <div class="bloque">
+            <h2 class="bloque__titulo">Query 1: Identificar los 10 países con el Producto Interno Bruto (GNP) más bajo y analizar cómo se relaciona esta condición económica con su forma de gobierno registrada en la base de datos.</h2>
+        </div>
+            <div class="bloque">
+                <div class="bloque__contenido">
+                    <p class="bloque__descripcion">
+                        La relación entre el Producto Interno Bruto (GNP) 
+                        más bajo y la forma de gobierno muestra que los 
+                        países con menor GNP suelen tener gobiernos en 
+                        formas menos comunes, como territorios dependientes 
+                        (Reino Unido, Nueva Zelanda), repúblicas pequeñas, 
+                        o gobiernos especiales como el "Estado de la Iglesia". 
+                        Esto indica que la estabilidad económica puede estar 
+                        influenciada por el tamaño del país, su independencia 
+                        política o su dependencia económica de otras naciones 
+                        más grandes.
+                    </p>
+                    <div class="bloque__texto">
+                        <p><code>
+                            session.query(Country.name, Country.gnp, Country.governmentForm).order_by(Country.gnp.asc()).filter(Country.gnp != None).filter(Country.gnp > 0 ).limit(10).all()  
+                            </code>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- Instrucción del Query -->
+    
+
+
+    <!-- Query ORM -->
+    
+
+    
+    <!-- -->
+            <div class="contenedor">
+                <div class="bloque">
+                <h2 class="tabla__titulo">Tabla de los Resultados</h2>
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th>País</th>
+                            <th>GNP</th>
+                            <th>Forma de Gobierno</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for resultado in consulta_1 %}
+                        <tr>
+                            <td>{{ resultado.name }}</td>
+                            <td>{{ resultado.gnp }}</td>
+                            <td>{{ resultado.government_form }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+                
+            </div> 
 
 {% endblock %}
