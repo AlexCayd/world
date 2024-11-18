@@ -35,22 +35,25 @@
             <h2 class="tabla__titulo">Análisis</h2>
             <div class="bloque__contenido">
                 <p class="bloque__descripcion">
-                    La relación entre el Producto Interno Bruto (GNP) 
-                    más bajo y la forma de gobierno muestra que los 
-                    países con menor GNP suelen tener gobiernos en 
-                    formas menos comunes, como territorios dependientes 
-                    (Reino Unido, Nueva Zelanda), repúblicas pequeñas, 
-                    o gobiernos especiales como el "Estado de la Iglesia". 
-                    Esto indica que la estabilidad económica puede estar 
-                    influenciada por el tamaño del país, su independencia 
-                    política o su dependencia económica de otras naciones 
-                    más grandes.
+                    Podemos observar que los países donde la 
+                    mayoría de la población reside en sus ciudades 
+                    suelen ser territorios extensos (con algunas 
+                    excepciones como es el caso de Japón, donde las 
+                    condiciones geograficas favorecen la densidad urbana). 
+                    Este patrón refleja el impacto de la urbanización y de 
+                    la geografía en la distribución poblacional.
                 </p>
                 <div class="bloque__texto">
                     <p><code>
-                        session.query(Country.name, Country.gnp, Country.governmentForm).order_by(Country.gnp.asc()).filter(Country.gnp != None).filter(Country.gnp > 0 ).limit(10).all()  
-                        </code>
-                    </p>
+                        resultados = (
+                            session.query(Country.name, Country.population, func.sum(City.population))
+                            .join(City, Country.code == City.countryCode)
+                            .group_by(Country.name)
+                            .order_by(func.sum(City.population).desc())
+                            .limit(10)
+                            .all()
+                        )                        
+                    </code></p>
                 </div>
             </div>
         </div>
