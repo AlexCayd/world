@@ -1,4 +1,5 @@
 from models import City, Country, CountryLanguage, SessionLocal
+from sqlalchemy import func
 
 # Aqui definimos funciones para interactuar con la base de datos
 
@@ -20,3 +21,31 @@ def consulta_1():
          ]# Devuelve una lista como diccionarios
      finally:
          session.close()
+
+
+def consulta_3():
+    session = SessionLocal()
+    try:
+        resultados = (
+            session.query(
+                Country.name,
+                Country.population, 
+                func.sum(City.population)
+            )
+            .join(City, Country.code == City.countryCode)
+            .group_by(Country.name)
+            .order_by(func.sum(City.population).desc())
+            .all()
+        )
+
+        return [
+            {
+                "country_name": resultado[0],
+                "country_population": resultado[1],
+                "total_city_population": resultado[2],
+            }
+            for resultado in resultados
+        ]  # Devuelve una lista de diccionarios
+    finally:
+        session.close()
+

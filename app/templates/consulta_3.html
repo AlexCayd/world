@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+
+{% block content%}
+    <div class="contenedor">
+        <div class="bloque">
+            <h2 class="bloque__titulo">Query 3: Identificar los países donde la población que reside en ciudades representa el mayor porcentaje en relación con la población total del país, destacando aquellos con la mayor concentración de población en las ciudades.
+            </h2>
+        </div>
+
+        <div class="contenedor">
+            <div class="bloque">
+            <h2 class="tabla__titulo">Tabla de los Resultados</h2>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>Pais</th>
+                        <th> Poblacion del pais </th>
+                        <th> Poblacion de sus ciudades </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resultado in consulta_3 %}
+                    <tr>
+                        <td>{{ resultado.country_name }}</td>
+                        <td> {{ resultado.country_population}}</td>
+                        <td>{{ resultado.total_city_population }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h2 class="tabla__titulo">Análisis</h2>
+            <div class="bloque__contenido">
+                <p class="bloque__descripcion">
+                    La relación entre el Producto Interno Bruto (GNP) 
+                    más bajo y la forma de gobierno muestra que los 
+                    países con menor GNP suelen tener gobiernos en 
+                    formas menos comunes, como territorios dependientes 
+                    (Reino Unido, Nueva Zelanda), repúblicas pequeñas, 
+                    o gobiernos especiales como el "Estado de la Iglesia". 
+                    Esto indica que la estabilidad económica puede estar 
+                    influenciada por el tamaño del país, su independencia 
+                    política o su dependencia económica de otras naciones 
+                    más grandes.
+                </p>
+                <div class="bloque__texto">
+                    <p><code>
+                        session.query(Country.name, Country.gnp, Country.governmentForm).order_by(Country.gnp.asc()).filter(Country.gnp != None).filter(Country.gnp > 0 ).limit(10).all()  
+                        </code>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
