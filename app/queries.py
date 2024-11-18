@@ -35,6 +35,7 @@ def consulta_3():
             .join(City, Country.code == City.countryCode)
             .group_by(Country.name)
             .order_by(func.sum(City.population).desc())
+            .limit(10)
             .all()
         )
 
