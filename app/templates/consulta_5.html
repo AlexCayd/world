@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="bloque">
+        <h2 class="bloque__titulo">Query 5: Identificar los países con la mayor diversidad lingüística, medida por el número de idiomas hablados, en ciudades con alta población.</h2>
+    </div>
+
+    <div class="contenedor">
+        <div class="bloque">
+            <h2 class="tabla__titulo">Tabla de los Resultados</h2>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>País</th>
+                        <th>Cantidad de Idiomas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resultado in consulta_5 %}
+                    <tr>
+                        <td>{{ resultado.country_name }}</td>
+                        <td>{{ resultado.language_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="bloque">
+        <h2 class="tabla__titulo">Análisis</h2>
+        <div class="bloque__contenido">
+            <p class="bloque__descripcion">
+                Podemos observar que los principales países que cuentan con mayor diversidad linguística en ciudades con alta población 
+                son países con alta población en general y con cierto atractivo turístico. China se destaca muy por encima, 
+                esto se debe a la gran extensión territorial y diversidad étnica que cuenta entre sus fronteras. 
+            </p>
+            <div class="bloque__texto">
+                <p><code>
+                    session.query(
+                    Country.name.label("country_name"),
+                    func.count(CountryLanguage.language).label("language_count")
+                    )
+                    .join(City, Country.code == City.countryCode)  
+                    .join(CountryLanguage, Country.code == CountryLanguage.countryCode)  
+                    .filter(City.population > umbral_poblacion)  
+                    .group_by(Country.name)
+                    .order_by(func.count(CountryLanguage.language).desc())  
+                    .limit(15).all()
+                    </code>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
