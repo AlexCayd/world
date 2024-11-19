@@ -50,3 +50,28 @@ def consulta_3():
     finally:
         session.close()
 
+
+
+def consulta_4():
+    session = SessionLocal()
+    try:
+        resultados = (
+            session.query(
+                Country.continent,
+                func.avg(Country.lifeExpectancy)
+            )
+            .group_by(Country.continent)
+            .order_by(func.avg(Country.lifeExpectancy).desc())
+            .all()
+        )
+
+        return [
+            {
+                "continent": resultado[0],
+                "life_expectance_avg": resultado[1],
+            }
+            for resultado in resultados
+        ]  # Devuelve una lista de diccionarios
+    finally:
+        session.close()
+
