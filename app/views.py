@@ -34,5 +34,6 @@ def register_routes(app):
     @app.route('/consulta_5')
     def consulta_5():
         q_5 = queries.consulta_5()
-        return render_template('consulta_5.html', consulta_5 = q_5)        
+        return render_template('consulta_5.html', consulta_5 = q_5)
+      
 
