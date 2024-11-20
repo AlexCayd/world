@@ -1,1 +1,77 @@
 {% extends 'base.html'%}
+
+{% block content%}
+    <div class="contenedor">
+        <div class="bloque">
+            <h2 class="bloque__titulo">Query 2: Mostrar las 5 ciudades más pobladas de mayor a menor por continente.</h2>
+        </div>
+
+        <div class="contenedor">
+            <div class="bloque">
+            <h2 class="tabla__titulo">Tabla de los Resultados</h2>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>Continente</th>
+                        <th>Ciudad</th>
+                        <th>Población</th>
+                        <th>País</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resultado in consulta_2 %}
+                    <tr>
+                        <td>{{ resultado.continent }}</td>
+                        <td>{{ resultado.city }}</td>
+                        <td>{{ resultado.population }}</td>
+                        <td>{{ resultado.country }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h2 class="tabla__titulo">Análisis</h2>
+            <div class="bloque__contenido">
+                <p class="bloque__descripcion">
+                    El query destaca las 5 ciudades más pobladas de cada continente, revelando la concentración urbana
+                     y patrones demográficos únicos. Ciudades como Tokio o Shanghái en Asia dominan por su enorme densidad,
+                     mientras que en Europa la población está más distribuida entre capitales como Moscú o Londres. 
+                     El uso de ROW_NUMBER() permite una clasificación clara basada exclusivamente en la población,
+                      sin sesgos geográficos. Los resultados reflejan cómo la urbanización, economía y densidad 
+                      demográfica influyen en las ciudades líderes de cada región, mostrando diferencias significativas
+                       entre continentes y los países que dominan cada lista. 
+                </p>
+                <div class="bloque__texto">
+                    <p><code>
+                        rankedCities = session.query(
+                        City.name,
+                        City.population,
+                        Country.name.label('country'),
+                        Country.continent,
+                        func.row_number().over(
+                        order_by=City.population.desc(),
+                        partition_by=Country.continent
+                        ).label('rank')
+                        ).join(Country, City.countryCode == Country.code).subquery()
+
+                        topCities = session.query(
+                        rankedCities.c.continent,
+                        rankedCities.c.name,
+                        rankedCities.c.population,
+                        rankedCities.c.country
+                        ).filter(
+                            rankedCities.c.rank "menor o igual" 5
+                        ).order_by(
+                            rankedCities.c.continent,
+                            rankedCities.c.rank
+                        ).all()
+                        </code>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
