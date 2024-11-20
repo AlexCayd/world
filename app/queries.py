@@ -26,27 +26,28 @@ def consulta_2():
     session = SessionLocal()
     try:
         rankedCities = session.query(
-        City.name,
-        City.population,
-        Country.name.label('country'),
-        Country.continent,
-        func.row_number().over(
-        order_by=City.population.desc(),
-        partition_by=Country.continent
-        ).label('rank')
+            City.name,
+            City.population,
+            Country.name.label('country'),
+            Country.continent,
+            func.row_number().over(
+                order_by=City.population.desc(),
+                partition_by=Country.continent
+            ).label('rank')
         ).join(Country, City.countryCode == Country.code).subquery()
 
         topCities = session.query(
-        rankedCities.c.continent,
-        rankedCities.c.name,
-        rankedCities.c.population,
-        rankedCities.c.country
+            rankedCities.c.continent,
+            rankedCities.c.name,
+            rankedCities.c.population,
+            rankedCities.c.country
         ).filter(
             rankedCities.c.rank <= 5
         ).order_by(
             rankedCities.c.continent,
             rankedCities.c.rank
         ).all()
+
         return [
             {
                 "continent": topCity[0],
@@ -55,6 +56,10 @@ def consulta_2():
                 "country": topCity[3]
             }
             for topCity in topCities
+        ]
+    finally:
+        session.close()
+
 
 def consulta_3():
     session = SessionLocal()
@@ -78,7 +83,7 @@ def consulta_3():
                 "total_city_population": resultado[2],
             }
             for resultado in resultados
-        ]  # Devuelve una lista de diccionarios
+        ]  
     finally:
         session.close()
 
