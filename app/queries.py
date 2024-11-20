@@ -129,13 +129,13 @@ def consulta_5() :
             .filter(City.population > umbral_poblacion)  
             .group_by(Country.name)
             .order_by(func.count(CountryLanguage.language).desc())  
-            .limit(15).all()
+            .limit(15).all())
         
-          return[{
+        return[{
               "country_name": resultado.country_name,
               "language_count": resultado.language_count
           }
           for resultado in resultados
           ]
-  finally:
+    finally:
       session.close()
