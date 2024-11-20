@@ -73,6 +73,7 @@ def consulta_3():
             .join(City, Country.code == City.countryCode)
             .group_by(Country.name)
             .order_by(func.sum(City.population).desc())
+            .limit(10)
             .all()
         )
 
@@ -87,6 +88,31 @@ def consulta_3():
     finally:
         session.close()
 
+
+def consulta_4():
+    session = SessionLocal()
+    try:
+        resultados = (
+            session.query(
+                Country.continent,
+                func.avg(Country.lifeExpectancy)
+            )
+            .group_by(Country.continent)
+            .order_by(func.avg(Country.lifeExpectancy).desc())
+            .all()
+          )
+
+        return [
+            {
+                "continent": resultado[0],
+                "life_expectance_avg": resultado[1],
+            }
+            for resultado in resultados
+        ]  # Devuelve una lista de diccionarios
+    finally:
+        session.close()
+        
+        
 def consulta_5() :
     session = SessionLocal()
     try:
@@ -104,14 +130,12 @@ def consulta_5() :
             .group_by(Country.name)
             .order_by(func.count(CountryLanguage.language).desc())  
             .limit(15).all()
-        )
-
-        return [
-            {
-                "country_name": resultado.country_name,
-                "language_count": resultado.language_count
-            }
-            for resultado in resultados
-        ]
-    finally:
-        session.close()
+        
+          return[{
+              "country_name": resultado.country_name,
+              "language_count": resultado.language_count
+          }
+          for resultado in resultados
+          ]
+  finally:
+      session.close()

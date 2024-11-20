@@ -1,1 +1,60 @@
 {% extends 'base.html'%}
+
+{% block content%}
+    <div class="contenedor">
+        <div class="bloque">
+            <h2 class="bloque__titulo">Query 4: Calcular la esperanza de vida promedio de los países en cada continente, analizando cómo varía este indicador entre los distintos continentes.</h2>
+        </div>
+
+        <div class="contenedor">
+            <div class="bloque">
+            <h2 class="tabla__titulo">Tabla de los Resultados</h2>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>Pais</th>
+                        <th> Esperanza de vida calculada </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resultado in consulta_4 %}
+                    <tr>
+                        <td>{{ resultado.continent }}</td>
+                        <td> {{ resultado.life_expectance_avg}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h2 class="tabla__titulo">Análisis</h2>
+            <div class="bloque__contenido">
+                <p class="bloque__descripcion">
+                    De acuerdo con los datos calculados, Europa lidera en esperanza de vida promedio, 
+                    lo cual es consistente con el hecho de que la mayoría de los países desarrollados 
+                    se encuentran en este continente. Por otro lado, la diferencia entre América del Norte
+                    y América del Sur es relativamente pequeña, reflejando un nivel de desarrollo similar 
+                    en términos de salud y calidad de vida en ciertas áreas. Sin embargo, el contraste 
+                    más significativo se observa en África, que presenta la menor esperanza de vida promedio. 
+                    La diferencia entre África y Europa supera los 23 años, destacando las disparidades 
+                    globales en condiciones de vida, acceso a servicios de salud y desarrollo socioeconómico.
+                </p>
+                <div class="bloque__texto">
+                    <p><code>
+                        resultados = (
+                            session.query(
+                                Country.continent,
+                                func.avg(Country.lifeExpectancy)
+                            )
+                            .group_by(Country.continent)
+                            .order_by(func.avg(Country.lifeExpectancy).desc())
+                            .all()
+                        )             
+                    </code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
